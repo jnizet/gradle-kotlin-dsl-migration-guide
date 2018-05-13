@@ -20,10 +20,7 @@ In a multi-project build, you can have some modules using the Groovy DSL (and th
 
 Using the `plugins` block:
 
-|===
-|Groovy |Kotlin
-
-a|
+.Groovy
 [source, groovy]
 ----
 plugins {
@@ -32,7 +29,7 @@ plugins {
 }
 ----
 
-a|
+.Kotlin
 [source, kotlin]
 ----
 plugins {
@@ -40,7 +37,6 @@ plugins {
     id("jacoco")
 }
 ----
-|===
 
 As you can see with the `jacoco` example, the same syntax can be used in Groovy and Kotlin (except for double quotes that must be used for Strings in Kotlin, of course).
 
@@ -48,30 +44,23 @@ But the Kotlin DSL also defines extension properties for all (AFAIK) built-in pl
 
 You can also use the older `apply` syntax:
 
-|===
-|Groovy |Kotlin
-
-a|
+.Groovy
 [source, groovy]
 ----
 apply plugin: 'checkstyle'
 ----
 
-a|
+.Kotlin
 [source, kotlin]
 ----
 plugins.apply("checkstyle")
 ----
-|===
 
 ## Applying external plugins
 
 Using the `plugins` block:
 
-|===
-|Groovy |Kotlin
-
-a|
+.Groovy
 [source, groovy]
 ----
 plugins {
@@ -79,21 +68,17 @@ plugins {
 }
 ----
 
-a|
+.Kotlin
 [source, kotlin]
 ----
 plugins {
     id("org.flywaydb.flyway") version "5.0.3"
 }
 ----
-|===
 
 You can also use the older `apply` syntax, but then the plugin must be added to the classpath of the build script:
 
-|===
-|Groovy |Kotlin
-
-a|
+.Groovy
 [source, groovy]
 ----
 buildscript {
@@ -110,7 +95,7 @@ apply plugin: 'io.spring.dependency-management'
 
 ----
 
-a|
+.Kotlin
 [source, kotlin]
 ----
 buildscript {
@@ -125,5 +110,3 @@ repositories {
 
 plugins.apply("io.spring.dependency-management")
 ----
-|===
-
