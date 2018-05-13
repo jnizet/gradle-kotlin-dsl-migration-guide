@@ -2,3 +2,4 @@
 *.iml
 .java-version
 .gradle
+build/
