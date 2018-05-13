@@ -64,7 +64,7 @@ Using the `plugins` block:
 [source, groovy]
 ----
 plugins {
-    id 'org.flywaydb.flyway' version '5.0.3'
+    id 'org.springframework.boot' version '2.0.1.RELEASE'
 }
 ----
 
@@ -72,7 +72,7 @@ plugins {
 [source, kotlin]
 ----
 plugins {
-    id("org.flywaydb.flyway") version "5.0.3"
+    id("org.springframework.boot") version "2.0.1.RELEASE"
 }
 ----
 
@@ -82,32 +82,32 @@ You can also use the older `apply` syntax, but then the plugin must be added to 
 [source, groovy]
 ----
 buildscript {
+    repositories {
+        maven {
+            setUrl("https://plugins.gradle.org/m2/")
+        }
+    }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE'
+        classpath("gradle.plugin.com.boxfuse.client:gradle-plugin-publishing:5.0.3")
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
-apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.flywaydb.flyway'
 ----
 
 .Kotlin
 [source, kotlin]
 ----
 buildscript {
+    repositories {
+        maven("https://plugins.gradle.org/m2/")
+    }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
+        classpath("gradle.plugin.com.boxfuse.client:gradle-plugin-publishing:5.0.3")
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
-plugins.apply("io.spring.dependency-management")
+plugins.apply("org.flywaydb.flyway")
 ----
 
 ## Customizing an existing task
@@ -169,6 +169,200 @@ jar.apply {
     archiveName = "foo.jar"
     into("META-INF") {
         from("bar")
+    }
+}
+----
+
+But there is another, apparently more idiomatic way to configure tasks: using a `tasks` block:
+
+.Groovy
+[source, groovy]
+----
+jar {
+    archiveName = 'foo.jar'
+    into('META-INF') {
+        from('bar')
+    }
+}
+
+test.doLast {
+    println("test completed")
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+tasks {
+    "jar"(Jar::class) {
+        archiveName = "foo.jar"
+        into("META-INF") {
+            from("bar")
+        }
+    }
+
+    "test" {
+        doLast { println("test completed") }
+    }
+}
+----
+
+Once again, note that if you need to apply task-specific configurations, you need to provide the type of the task (`Jar` in this example).
+
+This means that you'll sometimes need to dive in the documentation or source code of custom plugins to discover what the type of its custom tasks is, and to import them, or use their fully qualified name. It also means that, in order to customize a task of an external plugin, you'll have to add the plugin to the classpath of the build script:
+
+.Groovy
+[source, groovy]
+----
+plugins {
+    id('java')
+    id 'org.springframework.boot' version '2.0.1.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+    archiveName = 'app.jar'
+    mainClassName = 'com.ninja_squad.demo.Demo'
+}
+
+bootRun {
+    main = 'com.ninja_squad.demo.Demo'
+    args '--spring.profiles.active=demo'
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+import org.springframework.boot.gradle.tasks.run.BootRun
+
+plugins {
+    java
+    id("org.springframework.boot") version "2.0.1.RELEASE"
+}
+
+repositories {
+    mavenCentral()
+}
+
+plugins.apply("io.spring.dependency-management")
+
+tasks {
+    "bootJar"(BootJar::class) {
+        archiveName = "app.jar"
+        mainClassName = "com.ninja_squad.demo.Demo"
+    }
+
+    "bootRun"(BootRun::class) {
+        main = "com.ninja_squad.demo.Demo"
+        args("--spring.profiles.active=demo")
+    }
+}
+----
+
+## Creating a task
+
+Creating a task can be done by declaring delegated property, delegating to `tasks.creating`:
+
+.Groovy
+[source, groovy]
+----
+task greeting {
+    println('always printed: configuration phase')
+    doLast {
+        println('only printed if executed: execution phase')
+    }
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+val greeting by tasks.creating {
+    println("always printed: configuration phase")
+    doLast {
+        println("only printed if executed: execution phase")
+    }
+}
+----
+
+Sometimes you want to create a task of a given type (`Zip` in this example):
+
+.Groovy
+[source, groovy]
+----
+task docZip(type: Zip) {
+    archiveName = 'doc.zip'
+    from 'doc'
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+val docZip by tasks.creating(Zip::class) {
+    archiveName = "doc.zip"
+    from("doc")
+}
+----
+
+The same things can also be done using the `tasks` block:
+
+.Groovy
+[source, groovy]
+----
+task greeting2 {
+    println('always printed: configuration phase')
+    doLast {
+        println('only printed if executed: execution phase')
+    }
+}
+
+task docZip2(type: Zip) {
+    archiveName = 'doc.zip'
+    from 'doc'
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+tasks {
+    "greeting2" {
+        println("always printed: configuration phase")
+        doLast {
+            println("only printed if executed: execution phase")
+        }
+    }
+
+    "docZip2"(Zip::class) {
+        archiveName = "doc2.zip"
+        from("doc")
+    }
+}
+----
+
+Notice that creating a task uses the exact same syntax as customizing an existing task. This can be confusing, and even lead to bugs: your intention might be to customize an existing task, but if you use the wrong task name, you will end up creating a new task rather than customizing the existing task. The reader might also not know if your intention is to customize an existing task, or to create a new one. For these two reasons, you might prefer using these slightly more verbose variants, which clearly show your intent and avoid the previously described bug:
+
+.Kotlin
+[source, kotlin]
+----
+tasks {
+    // get and customize the existing task named test. Fails if there is no test task.
+    val test by getting {
+        doLast { println("test completed") }
+    }
+
+    // create a new docZip3 task. Fails if a task docZip3 already exists.
+    val docZip3 by creating(Zip::class) {
+        archiveName = "doc3.zip"
+        from("doc")
     }
 }
 ----

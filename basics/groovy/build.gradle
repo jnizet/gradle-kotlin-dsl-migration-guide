@@ -1,13 +1,18 @@
 buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE'
+        classpath 'gradle.plugin.com.boxfuse.client:gradle-plugin-publishing:5.0.7'
     }
 }
 
 plugins {
     id('java')
     id('jacoco')
-    id 'org.flywaydb.flyway' version '5.0.3'
+    id 'org.springframework.boot' version '2.0.1.RELEASE'
 }
 
 apply plugin: 'checkstyle'
@@ -16,6 +21,7 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'org.flywaydb.flyway'
 apply plugin: 'io.spring.dependency-management'
 
 jar.archiveName = 'foo.jar'
@@ -29,4 +35,38 @@ jar {
 
 test.doLast {
     println("test completed")
+}
+
+bootJar {
+    archiveName = 'app.jar'
+    mainClassName = 'com.ninja_squad.demo.Demo'
+}
+
+bootRun {
+    main = 'com.ninja_squad.demo.Demo'
+    args '--spring.profiles.active=demo'
+}
+
+task greeting {
+    println('always printed: configuration phase')
+    doLast {
+        println('only printed if executed: execution phase')
+    }
+}
+
+task docZip(type: Zip) {
+    archiveName = 'doc.zip'
+    from 'doc'
+}
+
+task greeting2 {
+    println('always printed: configuration phase')
+    doLast {
+        println('only printed if executed: execution phase')
+    }
+}
+
+task docZip2(type: Zip) {
+    archiveName = 'doc.zip'
+    from 'doc'
 }
