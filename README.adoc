@@ -2,11 +2,15 @@
 
 In case you didn't know, Gradle build scripts can be written in Kotlin rather than Groovy.
 However, as far as I know, the Kotlin DSL has never been properly documented.
-The closest to a documentation is the set of https://github.com/gradle/kotlin-dsl/tree/master/samples[examples in the kotlin-dsl project]
+The closest I found to a documentation is the set of https://github.com/gradle/kotlin-dsl/tree/master/samples[examples in the kotlin-dsl project]
 
 This README hopefully constitutes the temporary missing guide to migrate from the Groovy DSL to the Kotlin DSL.
 
 It assumes you already know the Groovy DSL, and that you're familiar with the Kotlin language syntax.
+
+## Disclaimer
+
+I'm by no means an expert of Gradle and even less of its Kotlin DSL. What followed is what I understood and tested. There might be better ways of doing, and this guide is not, at all, exhaustive. So issues and PRs are welcome.
 
 ## File names
 
