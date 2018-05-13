@@ -63,3 +63,67 @@ a|
 plugins.apply("checkstyle")
 ----
 |===
+
+## Applying external plugins
+
+Using the `plugins` block:
+
+|===
+|Groovy |Kotlin
+
+a|
+[source, groovy]
+----
+plugins {
+    id 'org.flywaydb.flyway' version '5.0.3'
+}
+----
+
+a|
+[source, kotlin]
+----
+plugins {
+    id("org.flywaydb.flyway") version "5.0.3"
+}
+----
+|===
+
+You can also use the older `apply` syntax, but then the plugin must be added to the classpath of the build script:
+
+|===
+|Groovy |Kotlin
+
+a|
+[source, groovy]
+----
+buildscript {
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+----
+
+a|
+[source, kotlin]
+----
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+plugins.apply("io.spring.dependency-management")
+----
+|===
+

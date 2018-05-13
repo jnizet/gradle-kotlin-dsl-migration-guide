@@ -1,6 +1,20 @@
+buildscript {
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE'
+    }
+}
+
 plugins {
     id('java')
     id('jacoco')
+    id 'org.flywaydb.flyway' version '5.0.3'
 }
 
 apply plugin: 'checkstyle'
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'io.spring.dependency-management'
+
