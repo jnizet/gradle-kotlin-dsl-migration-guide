@@ -110,6 +110,26 @@ buildscript {
 plugins.apply("org.flywaydb.flyway")
 ----
 
+## Applying the Kotlin plugin
+
+If you're using Kotlin to write your build scripts, you probably also use Kotlin in your project. Applying the Kotlin plugin is no different from applying any external other plugin. But the DSL has an extension function to make it shorter:
+
+.Groovy
+[source, groovy]
+----
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.2.41'
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+plugins {
+    kotlin("jvm") version "1.2.41"
+}
+----
+
 ## Customizing an existing task
 
 This is where Groovy and Kotlin start to differ. Since Kotlin is a statically typed language, and since you want to benefit from this static typing by discovering available properties and methods using auto-completion, you need to know and provide the type of the task you want to configure.

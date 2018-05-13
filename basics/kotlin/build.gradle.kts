@@ -14,6 +14,7 @@ plugins {
     java
     id("jacoco")
     id("org.springframework.boot") version "2.0.1.RELEASE"
+    kotlin("jvm") version "1.2.41"
 }
 
 plugins.apply("checkstyle")
