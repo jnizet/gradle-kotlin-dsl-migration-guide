@@ -20,7 +20,6 @@ In a multi-project build, you can have some modules using the Groovy DSL (and th
 
 Using the `plugins` block:
 
-[width=100%]
 |===
 |Groovy |Kotlin
 
@@ -40,5 +39,27 @@ plugins {
     java
     id("jacoco")
 }
+----
+|===
+
+As you can see with the `jacoco` example, the same syntax can be used in Groovy and Kotlin (except for double quotes that must be used for Strings in Kotlin, of course).
+
+But the Kotlin DSL also defines extension properties for all (AFAIK) built-in plugins, so you can use them, as shown above with the `java` example.
+
+You can also use the older `apply` syntax:
+
+|===
+|Groovy |Kotlin
+
+a|
+[source, groovy]
+----
+apply plugin: 'checkstyle'
+----
+
+a|
+[source, kotlin]
+----
+plugins.apply("checkstyle")
 ----
 |===
