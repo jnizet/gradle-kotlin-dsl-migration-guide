@@ -92,7 +92,6 @@ repositories {
 }
 
 apply plugin: 'io.spring.dependency-management'
-
 ----
 
 .Kotlin
@@ -109,4 +108,67 @@ repositories {
 }
 
 plugins.apply("io.spring.dependency-management")
+----
+
+## Customizing an existing task
+
+This is where Groovy and Kotlin start to differ. Since Kotlin is a statically typed language, and since you want to benefit from this static typing by discovering available properties and methods using auto-completion, you need to know and provide the type of the task you want to configure.
+
+Here is how you can configure a single property of the existing `jar` task:
+
+.Groovy
+[source, groovy]
+----
+jar.archiveName = 'foo.jar'
+----
+
+.Kotlin
+[source, kotlin]
+----
+val jar: Jar by tasks
+jar.archiveName = "foo.jar"
+----
+
+Note that specifying the type of the task explicitly is necessary. Otherwise, the script won't compile because the inferred type of `jar` will be `Task`, and the `archiveName` property is specific to the `Jar` task.
+
+You can, however, omit the type if you only need to configure properties or call methods declared in `Task`:
+
+.Groovy
+[source, groovy]
+----
+test.doLast {
+    println("test completed")
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+val test by tasks
+test.doLast { println("test completed") }
+----
+
+If you need to configure several properties or call multiple methods on the same task, the standard `apply` Kotlin extension function is handy:
+
+.Groovy
+[source, groovy]
+----
+jar {
+    archiveName = 'foo.jar'
+    into('META-INF') {
+        from('bar')
+    }
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+val jar: Jar by tasks
+jar.apply {
+    archiveName = "foo.jar"
+    into("META-INF") {
+        from("bar")
+    }
+}
 ----

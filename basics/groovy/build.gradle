@@ -18,3 +18,15 @@ repositories {
 
 apply plugin: 'io.spring.dependency-management'
 
+jar.archiveName = 'foo.jar'
+
+jar {
+    archiveName = 'foo.jar'
+    into('META-INF') {
+        from('bar')
+    }
+}
+
+test.doLast {
+    println("test completed")
+}

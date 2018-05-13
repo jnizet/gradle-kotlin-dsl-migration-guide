@@ -18,3 +18,15 @@ repositories {
 
 plugins.apply("io.spring.dependency-management")
 
+val jar: Jar by tasks
+jar.archiveName = "foo.jar"
+
+jar.apply {
+    archiveName = "foo.jar"
+    into("META-INF") {
+        from("bar")
+    }
+}
+
+val test by tasks
+test.doLast { println("test completed") }
