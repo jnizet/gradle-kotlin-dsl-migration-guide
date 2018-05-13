@@ -467,3 +467,49 @@ dependencies {
     "integTestImplementation"("com.ninja-squad:DbSetup:2.1.0")
 }
 ----
+
+## Extensions
+
+Many plugins come with extensions to configure them. If those plugins are applied using the `plugins` block (which is true for the jacoco and the Spring Boot plugins in the following example), then Kotlin extension functions are made available to configure their extension, the same way as in Groovy.
+
+On the other hand, if you use the older `apply` function to apply a plugin (which is true for the checkstyle plugin in the following example), you'll have to use a generic `configure()` method to configure them:
+
+.Groovy
+[source, groovy]
+----
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            time = null
+        }
+    }
+}
+
+checkstyle {
+    maxErrors = 10
+}
+----
+
+.Kotlin
+[source, kotlin]
+----
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            time = null
+        }
+    }
+}
+
+extensions.configure<CheckstyleExtension>("checkstyle") {
+    maxErrors = 10
+}
+----

@@ -131,3 +131,19 @@ dependencies {
     "db"("org.postgresql:postgresql")
     "integTestImplementation"("com.ninja-squad:DbSetup:2.1.0")
 }
+
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            time = null
+        }
+    }
+}
+
+extensions.configure<CheckstyleExtension>("checkstyle") {
+    maxErrors = 10
+}
