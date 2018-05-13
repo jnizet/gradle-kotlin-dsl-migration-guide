@@ -1,4 +1,6 @@
+// tag::plugins[]
 plugins {
     id('java')
     id('jacoco')
 }
+// end::plugins[]

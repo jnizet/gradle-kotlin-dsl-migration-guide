@@ -1,2 +1,31 @@
 # The missing migration guide to the Gradle Kotlin DSL
 
+In case you didn't know, Gradle build scripts can be written in Kotlin rather than Groovy.
+However, as far as I know, the Kotlin DSL has never been properly documented.
+The closest to a documentation is the set of https://github.com/gradle/kotlin-dsl/tree/master/samples[examples in the kotlin-dsl project]
+
+This README hopefully constitutes the temporary missing guide to migrate from the Groovy DSL to the Kotlin DSL.
+
+It assumes you already know the Groovy DSL, and that you're familiar with the Kotlin language syntax.
+
+## File names
+
+To use the Kotlin DSL, simply name your files `build.gradle.kts` instead of `build.gradle`.
+
+The `settings.gradle` file can also be renamed `settings.gradle.kts`.
+
+In a multi-project build, you can have some modules using the Groovy DSL (and thus use `build.gradle` files), and some other modules using the Kotlin DSL (and thus use `build.gradle.kts` files). So you're not forced to migrate everything at once.
+
+## Applying built-in plugins
+
+Using the `plugins` block:
+
+[source, groovy]
+----
+include::basics/groovy/build.gradle[tag=plugins]
+----
+
+[source, kotlin]
+----
+include::basics/kotlin/build.gradle.kts[tag=plugins]
+----
