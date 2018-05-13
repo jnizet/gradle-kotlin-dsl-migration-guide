@@ -10,7 +10,7 @@ It assumes you already know the Groovy DSL, and that you're familiar with the Ko
 
 ## Disclaimer
 
-I'm by no means an expert of Gradle and even less of its Kotlin DSL. What followed is what I understood and tested. There might be better ways of doing, and this guide is not, at all, exhaustive. So issues and PRs are welcome.
+I'm by no means an expert of Gradle and even less of its Kotlin DSL. What follows is what I understood and tested. There might be better ways of doing, and this guide is not, at all, exhaustive. So issues and PRs are welcome.
 
 ## File names
 
