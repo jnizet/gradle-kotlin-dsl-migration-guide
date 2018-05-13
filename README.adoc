@@ -24,8 +24,8 @@ Using the `plugins` block:
 [source, groovy]
 ----
 plugins {
-    id('java')
-    id('jacoco')
+    id 'java'
+    id 'jacoco'
 }
 ----
 
@@ -38,7 +38,7 @@ plugins {
 }
 ----
 
-As you can see with the `jacoco` example, the same syntax can be used in Groovy and Kotlin (except for double quotes that must be used for Strings in Kotlin, of course).
+As you can see with the `jacoco` example, the same syntax can be used in Groovy and Kotlin (except for double quotes and parentheses that must be used in Kotlin, of course).
 
 But the Kotlin DSL also defines extension properties for all (AFAIK) built-in plugins, so you can use them, as shown above with the `java` example.
 
@@ -84,7 +84,7 @@ You can also use the older `apply` syntax, but then the plugin must be added to 
 buildscript {
     repositories {
         maven {
-            setUrl("https://plugins.gradle.org/m2/")
+            url 'https://plugins.gradle.org/m2/'
         }
     }
     dependencies {
@@ -209,7 +209,7 @@ tasks {
 
 Once again, note that if you need to apply task-specific configurations, you need to provide the type of the task (`Jar` in this example).
 
-This means that you'll sometimes need to dive in the documentation or source code of custom plugins to discover what the type of its custom tasks is, and to import them, or use their fully qualified name. It also means that, in order to customize a task of an external plugin, you'll have to add the plugin to the classpath of the build script:
+This means that you'll sometimes need to dive in the documentation or source code of custom plugins to discover what the types of its custom tasks are, and to import them, or use their fully qualified name.
 
 .Groovy
 [source, groovy]
