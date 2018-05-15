@@ -170,7 +170,7 @@ val test by tasks
 test.doLast { println("test completed") }
 ----
 
-If you need to configure several properties or call multiple methods on the same task, the standard `apply` Kotlin extension function is handy:
+If you need to configure several properties or call multiple methods on the same task you can group them in a block as follows:
 
 .Groovy
 [source, groovy]
@@ -186,6 +186,19 @@ jar {
 .Kotlin
 [source, kotlin]
 ----
+val jar by tasks.getting(Jar::class) {
+    archiveName = "foo.jar"
+    into("META-INF") {
+        from("bar")
+    }
+}
+----
+
+If you already have a `val` for the task you want to configure in scope, the Kotlin `apply` function is handy:
+
+.Kotlin
+[source, kotlin]
+----
 val jar: Jar by tasks
 jar.apply {
     archiveName = "foo.jar"
@@ -195,7 +208,7 @@ jar.apply {
 }
 ----
 
-But there is another, apparently more idiomatic way to configure tasks: using a `tasks` block:
+But there is another idiomatic way to configure tasks: using a `tasks` block:
 
 .Groovy
 [source, groovy]
