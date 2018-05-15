@@ -3,7 +3,7 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 
 buildscript {
     repositories {
-        maven("https://plugins.gradle.org/m2/")
+        gradlePluginPortal()
     }
     dependencies {
         classpath("gradle.plugin.com.boxfuse.client:gradle-plugin-publishing:5.0.3")

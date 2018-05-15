@@ -87,9 +87,7 @@ You can also use the older `apply` syntax, but then the plugin must be added to 
 ----
 buildscript {
     repositories {
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
+        gradlePluginPortal()
     }
     dependencies {
         classpath("gradle.plugin.com.boxfuse.client:gradle-plugin-publishing:5.0.3")
@@ -104,7 +102,7 @@ apply plugin: 'org.flywaydb.flyway'
 ----
 buildscript {
     repositories {
-        maven("https://plugins.gradle.org/m2/")
+        gradlePluginPortal()
     }
     dependencies {
         classpath("gradle.plugin.com.boxfuse.client:gradle-plugin-publishing:5.0.3")
