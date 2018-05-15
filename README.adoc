@@ -57,7 +57,7 @@ apply plugin: 'checkstyle'
 .Kotlin
 [source, kotlin]
 ----
-plugins.apply("checkstyle")
+apply(plugin = "checkstyle")
 ----
 
 ## Applying external plugins
@@ -109,7 +109,7 @@ buildscript {
     }
 }
 
-plugins.apply("org.flywaydb.flyway")
+apply(plugin = "org.flywaydb.flyway")
 ----
 
 ## Applying the Kotlin plugin
@@ -273,7 +273,7 @@ repositories {
     mavenCentral()
 }
 
-plugins.apply("io.spring.dependency-management")
+apply(plugin = "io.spring.dependency-management")
 
 tasks {
     "bootJar"(BootJar::class) {

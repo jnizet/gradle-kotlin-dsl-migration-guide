@@ -17,9 +17,9 @@ plugins {
     kotlin("jvm") version "1.2.41"
 }
 
-plugins.apply("checkstyle")
-plugins.apply("org.flywaydb.flyway")
-plugins.apply("io.spring.dependency-management")
+apply(plugin = "checkstyle")
+apply(plugin = "org.flywaydb.flyway")
+apply(plugin = "io.spring.dependency-management")
 
 repositories {
     mavenCentral()
