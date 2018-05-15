@@ -144,6 +144,6 @@ springBoot {
     }
 }
 
-extensions.configure<CheckstyleExtension>("checkstyle") {
+configure<CheckstyleExtension> {
     maxErrors = 10
 }

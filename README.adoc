@@ -487,7 +487,7 @@ dependencies {
 
 Many plugins come with extensions to configure them. If those plugins are applied using the `plugins` block (which is true for the jacoco and the Spring Boot plugins in the following example), then Kotlin extension functions are made available to configure their extension, the same way as in Groovy.
 
-On the other hand, if you use the older `apply` function to apply a plugin (which is true for the checkstyle plugin in the following example), you'll have to use a generic `configure()` method to configure them:
+On the other hand, if you use the older `apply` function to apply a plugin (which is true for the checkstyle plugin in the following example), you'll have to use the `configure<T> {}` function to configure them:
 
 .Groovy
 [source, groovy]
@@ -524,7 +524,7 @@ springBoot {
     }
 }
 
-extensions.configure<CheckstyleExtension>("checkstyle") {
+configure<CheckstyleExtension> {
     maxErrors = 10
 }
 ----
