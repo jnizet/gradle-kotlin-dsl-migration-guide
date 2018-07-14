@@ -1,4 +1,12 @@
+:note-caption: :information_source:
+
 # The missing migration guide to the Gradle Kotlin DSL
+
+[NOTE]
+====
+All of this guide, and more, has now been integrated into an official migration guide at gradle.
+Please refer to https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/[the official guide].
+====
 
 In case you didn't know, Gradle build scripts can be written in Kotlin rather than Groovy.
 However, as far as I know, the Kotlin DSL has never been properly documented.
